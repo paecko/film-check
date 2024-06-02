@@ -1,0 +1,57 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movies</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="{% static 'styles/base_style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/detailed_movie_style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/search_results_style.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="column-center-in-header">
+          <div class="nav-row">
+            <a class="nav-link" href="{% url 'movie_api:index' %}">Home</a>
+            {% if request.session.user %}
+              <a class="nav-link nav-link-with-left-margin" href="{% url 'movie_api:my_watched_movies' %}">Watched Movies</a>
+              <a class="nav-link nav-link-with-left-margin" href="{% url 'movie_api:my_watch_list' %}">Watch List</a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="column-center-in-header">
+          <div class="header-right-side-row">
+            <form action="{% url 'movie_api:search_results' %}" method="get" role="search">
+              <input name="q" type="text" placeholder="Search..." type="search" aria-label="Search" class="form-control form-control-dark text-bg-dark">
+            </form>
+
+            <div class="user-auth-buttons">
+              {% if request.session.user %}
+              {% include 'movie_api/partials/user_drop_down.html' with first_letter_of_name=request.session.user.userinfo.name|slice:"1"|upper %}
+              {% else %}
+              <a href="{% url 'movie_api:login' %}" class="btn btn-outline-light me-2">Login</a>
+              {% endif %}
+            </div>      
+          </div>
+        </div>
+      </div>
+    </header>
+    {% block content %}
+    <div>
+    </div>
+    {% endblock content %}
+  </body>
+</html>

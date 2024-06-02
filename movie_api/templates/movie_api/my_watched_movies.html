@@ -1,0 +1,54 @@
+{% extends "movie_api/base.html" %}
+{% load static %}
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Movies</title>
+  </head>
+  <body>
+      {% block content %}
+      <script>
+        if(performance.navigation.type == 2){
+          location.reload(true);
+        }
+      </script>
+      
+        <div class="pagination-container">
+          <span class="step-links">
+              {% if watched_movies.has_previous %}
+                  <a href="?page=1">&laquo; first</a>
+                  <a href="?page={{ watched_movies.previous_page_number }}">previous</a>
+              {% endif %}
+      
+              <span class="current">
+                  Page {{ watched_movies.number }} of {{ watched_movies.paginator.num_pages }}.
+              </span>
+      
+              {% if watched_movies.has_next %}
+                  <a href="?page={{ watched_movies.next_page_number }}">next</a>
+                  <a href="?page={{ watched_movies.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+          </span>
+        </div>
+        <div class="search-container-background">
+          <div class="search-container main-container">
+            {% for movie in watched_movies %}
+            <div class="search-results-movie">
+              <div>
+                <img class="watched-movies-poster" src="{{ movie.poster }}" alt="{{ movie.title }} poster">
+              </div>
+              <div class="search-results-title-div">
+                <a href="{% url 'movie_api:detailed_movie' movie.pk %}" class="search-results-title">{{movie.title}}</a>
+              </div>
+              <div class="check-box-div">
+              </div>
+            </div>
+            <hr class="divider">
+            {% endfor %}
+          </div>
+        </div>
+      {% endblock content %}
+  </body>
+</html>

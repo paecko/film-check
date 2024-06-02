@@ -1,0 +1,59 @@
+{% extends "movie_api/base.html" %}
+{% load static %}
+{% load my_template_tags %}
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Movies</title>
+  </head>
+  <body>
+    {% block content %}
+    <div class='main-container'>
+        <div class="detailed-movie-container">
+            <div class="poster-div">
+                <img class="poster" src="{{ movie.poster }}" height="300vh" alt="{{ movie.title }} poster">
+            </div>
+            <div class='movie-info'>
+                <div>
+                    <span>
+                        <h1 class='movie-title'>{{ movie.title }} ({{movie.year}})</h1>
+
+                    </span>
+                </div>
+                <div class="movie-details">
+                    <p class="detail">Runtime: {{ movie.runtime }}</p>
+                    <p class="detail">Released: {{ movie.released }}</p>
+                    <p class="detail">Director: {{ movie.director }}</p>
+                    <p class="detail">Actors: {{ movie.actors }}</p>
+                    <p class="detail">Language: {{ movie.language }}</p>
+                    <p class="detail">Country: {{ movie.country }}</p>
+                </div>
+                <div class="user-options">
+                    <div class='check-and-watch-list-div'>
+                        <div class="checked-div"> 
+                            <p>Watched? </p>{% include 'movie_api/partials/check_movie_form.html' with movie_pk=movie.pk movie_checked=movie_checked %}
+                        </div>
+                        <div class='watch-list-div'>
+                            <p>Add to watch list: </p>{% include 'movie_api/partials/add_to_watch_list.html' with movie_pk=movie.pk in_watch_list=in_watch_list %}
+                        </div>
+                    </div>
+                    <div class="rating-div">
+                        <div class="stars">
+                            <p>Rate: </p>{% include 'movie_api/partials/rate_movie.html' with movie_pk=movie.pk movie_checked=movie_checked %}
+                        </div>
+                        <div class='error-message'>
+                        </div>
+                    </div>
+                </div>
+ 
+            </div>
+        </div>
+        <div class='plot'>
+            {{ movie.plot }}
+        </div>
+    </div>
+   {% endblock content %}
+</body>
+</html>

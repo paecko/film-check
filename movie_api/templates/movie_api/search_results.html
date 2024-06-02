@@ -1,0 +1,55 @@
+{% extends "movie_api/base.html" %}
+{% load static %}
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Movies</title>
+  </head>
+  <body>
+    {% block content %}
+
+    {% if query %}
+    <div class="pagination-container">
+      <span class="step-links">
+          {% if movies.has_previous %}
+              <a href="?page=1&q={{query}}">&laquo; first</a>
+              <a href="?page={{ movies.previous_page_number }}&q={{query}}">previous</a>
+          {% endif %}
+  
+          <span class="current">
+              Page {{ movies.number }} of {{ movies.paginator.num_pages }}.
+          </span>
+  
+          {% if movies.has_next %}
+              <a href="?page={{ movies.next_page_number }}&q={{query}}">next</a>
+              <a href="?page={{ movies.paginator.num_pages }}&q={{query}}">last &raquo;</a>
+          {% endif %}
+      </span>
+    </div>
+    <div class="search-container-background">
+      <div class="search-container main-container">
+          {% for movie in movies %}
+          <div class="search-results-movie">
+            <div>
+              <a href="{% url 'movie_api:detailed_movie' movie.pk %}">
+                <img class="search-results-poster" src="{{ movie.poster }}" alt="{{ movie.title }} poster">
+              </a>
+            </div>
+            <div class="search-results-title-div">
+              <a href="{% url 'movie_api:detailed_movie' movie.pk %}" class="search-results-title">{{movie.title}}</a>
+            </div>
+          </div>
+          <hr>
+          {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <!-- return a message if the user does not enter a search query -->
+      <h1>Please enter a search query</h1>
+    {% endif %}
+    {% endblock content %}
+
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{% load my_template_tags %}
+
+<div>
+  {% csrf_token %}
+    {% if request.session.user %}
+      <a class='submit' style="color:inherit;" href='javascript:;'>
+        {% if movie_checked %} 
+            <i class="check-box bi bi-check-square-fill watched-movie"></i>
+        {% else %}
+            <i class="check-box bi bi-check-square unwatched-movie"></i>
+        {% endif %}
+      </a>
+    {% else %}
+      <a href="{% url 'movie_api:login' %}" style="color:inherit;">
+        <i class="check-box bi bi-check-square unwatched-movie"></i>
+      </a>
+    {% endif %}
+</div> 
+
+<script defer>
+  $(document).ready(function(){
+      $("a.submit").click(function(event){
+          event.preventDefault();
+          $.ajax({
+              type: 'POST',
+              url: '{% url "movie_api:check_movie" movie_pk %}',
+              data: {
+                  csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+              },
+              dataType: 'json',
+              // handle a successful response
+              success : function(json) {
+                  if (json['movie_checked']) {
+                      $('.check-box').addClass('bi-check-square-fill watched-movie').removeClass('bi-check-square unwatched-movie');
+                      $('p.check-before-rating-message').remove();
+                  } else {
+                      $('.check-box').addClass('bi-check-square unwatched-movie').removeClass('bi-check-square-fill watched-movie');
+                      $('i.star').removeClass('active_star');
+                  }
+              },
+
+              // handle a non-successful response
+              error : function(xhr,errmsg,err) {
+                  console.log(err, errmsg); // provide a bit more info about the error to the console
+              }
+          })
+      }); 
+  });
+</script>

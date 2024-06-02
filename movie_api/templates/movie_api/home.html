@@ -1,0 +1,30 @@
+{% extends "movie_api/base.html" %}
+{% load static %}
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Movies</title>
+  </head>
+  <body>
+    {% block content %}
+    <link rel="stylesheet" href="{% static 'styles/home.css' %}">
+    {% if not request.user.is_authenticated %}
+      <h1 class="header">
+        <a class="signup-header-link" href="{% url 'movie_api:login' %}">Signup or Login</a>
+        to track and rate the movies you've watched!
+        </h1>
+
+    {% endif %}
+    <div class="latest-movies-row">
+      <h1 class="recently-added-header">Recently Added Films</h1>
+      {% for movie in recent_movies %}
+        <a href="{% url 'movie_api:detailed_movie' movie.pk %}">
+          <img class="latest-movie-poster" src="{{ movie.poster }}" alt="{{ movie.title }} poster">
+        </a>
+      {% endfor %}
+    </div>
+
+    {% endblock content %}
+  </body>
+</html>

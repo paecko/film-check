@@ -1,0 +1,23 @@
+{% extends "movie_api/base.html" %}
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Movies</title>
+  </head>
+  <body>
+    {% block content %}
+
+    <h1>Login</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Signup</button>
+        <a href="{% url 'movie_api:login' %}">Already have an account? Login</a>
+    </form>
+
+    {% endblock content %}
+
+  </body>
+</html>
