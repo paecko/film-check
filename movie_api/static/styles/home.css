@@ -1,0 +1,33 @@
+.signup-header-link {
+    color:rgb(7, 248, 67);
+    text-decoration:None;
+}
+
+.signup-header-link:hover {
+    text-decoration: underline;
+    color:rgb(108, 224, 137);
+}
+
+.header {
+    margin-top:1%;
+    text-align:center;
+    color:white;
+}
+
+.recently-added-header {
+    color:white;
+}
+
+.latest-movies-row {
+    margin-top: 2%;
+    width: 100vw;
+    height: 100vh;
+    text-align:center;
+}
+
+.latest-movie-poster {
+    border: 3px solid #555;
+    border-radius:5%;
+    height:40%;
+    width:15%;
+}

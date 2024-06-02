@@ -1,0 +1,67 @@
+.search-container-background {
+    display:flex;
+    justify-content: center;
+}
+
+.search-container {
+    display:flex;
+    flex-direction:column;
+    width:60%;
+    height:100%;
+    margin-top:1%;
+}
+
+
+.search-results-movie {
+    display:flex;
+    align-items: flex-start;
+    width:90%;
+}
+
+.search-results-poster {
+    max-width:3vw;
+}
+
+.watched-movies-poster{
+    height:10vh;
+}
+
+.search-results-title-div {
+    margin-left: 2%;
+    margin-top:1%;
+    width:inherit;
+}
+
+.search-results-title {
+    font-family: "Oswald", sans-serif;
+    font-style:normal;
+    text-decoration: none;
+    color:white;
+    font-size:1.3em;
+}
+
+.check-box-div {
+    display: flex;
+    justify-content: flex-end;
+    width:inherit;
+}
+
+.search-results-title:hover {
+    color:rgb(108, 224, 137);
+}
+
+.divider {
+    color:rgb(20, 24, 23);
+}
+
+.pagination-container {
+    display:flex;
+    justify-content: center;
+    color:white;
+    margin-top:1%;
+}
+
+.pagination-container a {
+    color:rgb(16, 201, 63);
+    text-decoration: None;
+}

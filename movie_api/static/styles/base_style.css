@@ -1,0 +1,61 @@
+/* https://www.freepik.com/free-vector/vector-background-seamless-retro-film_1307026.htm#fromView=search&page=1&position=0&uuid=aab7fd68-f509-4c65-8a00-0118ccd4128b */
+body {
+    background-image: linear-gradient(90deg, rgb(75, 63, 63),#2f2f2f);
+
+}
+
+.header-container {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color:#2b2b2b;
+    height:8vh;
+}
+
+.column-center-in-header {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nav-link-with-left-margin {
+    margin-left:10%;
+}
+
+.nav-row {
+    display:flex;
+    flex-direction: row;
+    width:18vw;
+    margin-left: 50%;
+}   
+
+.nav-link {
+    text-decoration: none;
+    color:white;
+    white-space: nowrap;
+}
+
+a.nav-link:hover { 
+    font-weight:bold;
+    color:rgb(206, 221, 150);
+}
+
+.header-right-side-row {
+    display:flex;
+    flex-direction: row;
+    margin-right:10vw;
+    width:25vw;
+    justify-content: space-between;
+}
+
+.user-auth-buttons {
+    display: flex;
+}
+
+hr {
+    border: none;
+    height: 0.1vh;
+    /* Set the hr color */
+    color: rgb(230, 4, 4);  /* old IE */
+    background-color: rgb(235, 236, 238);  /* Modern Browsers */
+}
