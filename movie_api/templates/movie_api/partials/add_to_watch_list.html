@@ -1,3 +1,16 @@
+{% load static %}
+
+<script src="{% static 'scripts/main.js' %}" type="text/javascript"></script>
+<script defer>
+    $(document).ready(function() {
+        $("a.watch-list-submit").click(function(event){
+            url = '{% url "movie_api:add_to_watch_list" movie_pk %}';
+            data = {};
+            handleAddToWatchList($, url, data, '{{ movie_pk }}');
+        });
+    });
+</script>
+
 <div>
   {% csrf_token %}
   {% if request.session.user %}
@@ -13,32 +26,4 @@
         <i class="plus bi bi-plus-circle watch-list-not-added"></i>
         </a>
     {% endif %}
-</div> 
-
-<script defer>
-  $(document).ready(function(){
-      $("a.watch-list-submit").click(function(event){
-          event.preventDefault();
-          $.ajax({
-              type: 'POST',
-              url: '{% url "movie_api:add_to_watch_list" movie_pk %}',
-              data: {
-                  csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-              },
-              dataType: 'json',
-              // handle a successful response
-              success : function(json) {
-                  if (json['in_watch_list']) {
-                      $('.plus').addClass('bi-plus-circle-fill watch-list-added').removeClass('bi-plus-circle watch-list-not-added');
-                  } else {
-                      $('.plus').addClass('bi-plus-circle watch-list-not-added').removeClass('bi-plus-circle-fill watch-list-added');
-                  }
-              },
-              // handle a non-successful response
-              error : function(xhr,errmsg,err) {
-                  console.log(err, errmsg); // provide a bit more info about the error to the console
-              }
-          })
-      }); 
-  });
-</script>
+</div>

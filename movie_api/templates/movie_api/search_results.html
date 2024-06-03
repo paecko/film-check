@@ -40,6 +40,9 @@
             <div class="search-results-title-div">
               <a href="{% url 'movie_api:detailed_movie' movie.pk %}" class="search-results-title">{{movie.title}}</a>
             </div>
+            <div>
+              {% include 'movie_api/partials/check_movie_form_list.html' with movie_pk=movie.pk movie_checked=movie.checked %}
+            </div>
           </div>
           <hr>
           {% endfor %}

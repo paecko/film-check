@@ -1,5 +1,22 @@
-{% load my_template_tags %}
+{% load static %}
+<script src="{% static 'scripts/main.js' %}" type="text/javascript"></script>
+<script defer>
 
+    $(document).ready(function() {
+        $("a.rating-star").click(function(event) {
+            url = '{% url "movie_api:save_rating" movie_pk %}'
+            rating = $(this).attr('data-rating');
+            // if user clicked the maximum rated star, we are going to deactivate all the active stars.
+            if ($(this).is($('i.active_star').last().parent())) {
+                rating = -1;
+            }
+            data = {rating:rating};
+            handleRating($, url, data);
+        });
+    });
+</script>
+
+{% load my_template_tags %}
 {% for i in 5|times %}
     {% if request.session.user %}
     <a class="rating-star" data-rating="{{i}}">
@@ -16,50 +33,3 @@
         </a>
     {% endif %}
 {% endfor %}
-
-<script defer>
-    $(document).ready(function() {
-        $("a.rating-star").click(function(event) {
-            // if user clicked the maximum rated star, we are going to deactivate all the active stars.
-            if ($(this).is($('i.active_star').last().parent())) {
-                saveRatingAjaxCall(-1);
-            } else {
-                saveRatingAjaxCall($(this).attr('data-rating'));
-            }
-        });
-    });
-    
-    function saveRatingAjaxCall (rating) {
-        $.ajax({
-                type: 'POST',
-                url: '{% url "movie_api:save_rating" movie_pk %}',
-                data: {
-                rating: rating,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-                },
-                dataType: 'json',
-                success: function(json) {              
-                    // if user tries to rate movie before checking it, we display a message.
-                    if (! json['movie_checked']) {
-                        $("p.check-before-rating-message").remove();
-                        var message = $("<p class='check-before-rating-message'></p>").text("Check the movie before rating.");
-                        $(".error-message").append(message);
-                        message = null;
-                    } else {
-                        $("p.check-before-rating-message").remove();
-
-                        // making all the stars inactive when user clicks the maximum rated star.
-                        if (rating == -1) {
-                            $('i.active_star').removeClass('active_star');
-                        // user has clicked a star other than the maximum rated star.
-                        } else {
-                        const stars = document.querySelectorAll(".stars i");
-                        stars.forEach((star, index) => {
-                                index <= rating ? star.classList.add("active_star") : star.classList.remove("active_star");
-                            })
-                        }
-                    }
-                }
-            })
-    }
-</script>

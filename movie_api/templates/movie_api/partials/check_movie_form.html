@@ -1,4 +1,15 @@
-{% load my_template_tags %}
+{% load static %}
+
+<script src="{% static 'scripts/main.js' %}" type="text/javascript"></script>
+<script defer>
+    $(document).ready(function() {
+      $("a.submit").click(function(event){
+            url = '{% url "movie_api:check_movie" movie_pk %}';
+            data = {};
+            handleCheck($, url, data);
+        });
+    });
+</script>
 
 <div>
   {% csrf_token %}
@@ -15,35 +26,4 @@
         <i class="check-box bi bi-check-square unwatched-movie"></i>
       </a>
     {% endif %}
-</div> 
-
-<script defer>
-  $(document).ready(function(){
-      $("a.submit").click(function(event){
-          event.preventDefault();
-          $.ajax({
-              type: 'POST',
-              url: '{% url "movie_api:check_movie" movie_pk %}',
-              data: {
-                  csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-              },
-              dataType: 'json',
-              // handle a successful response
-              success : function(json) {
-                  if (json['movie_checked']) {
-                      $('.check-box').addClass('bi-check-square-fill watched-movie').removeClass('bi-check-square unwatched-movie');
-                      $('p.check-before-rating-message').remove();
-                  } else {
-                      $('.check-box').addClass('bi-check-square unwatched-movie').removeClass('bi-check-square-fill watched-movie');
-                      $('i.star').removeClass('active_star');
-                  }
-              },
-
-              // handle a non-successful response
-              error : function(xhr,errmsg,err) {
-                  console.log(err, errmsg); // provide a bit more info about the error to the console
-              }
-          })
-      }); 
-  });
-</script>
+</div>
