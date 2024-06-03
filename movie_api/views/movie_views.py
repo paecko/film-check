@@ -43,6 +43,15 @@ def search(request):
         paginator = Paginator(movies, 8)
         page_number = request.GET.get("page")
         page_movies = paginator.get_page(page_number)
+        
+        if request.session.get('user'):
+            user = User.objects.get(email=request.session.get('user').get('userinfo').get('email'))
+            for movie in page_movies:   
+                try:
+                    CheckedMovie.objects.get(User=user, Movie=movie)
+                    movie.checked = True
+                except (KeyError, CheckedMovie.DoesNotExist):
+                    movie.checked = False
 
         return render(request, "movie_api/search_results.html", {'movies': page_movies, 'query': query})
     else:
