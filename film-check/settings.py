@@ -68,10 +68,10 @@ WSGI_APPLICATION = 'film-check.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'os.environ.get("db_name")',
-        'USER': 'os.environ.get("postgres_user")',
-        'HOST': 'os.environ.get("postgres_host")', 
-        'PORT': 'os.environ.get("postgres_port")',
+        'NAME': os.environ.get("db_name"),
+        'USER': os.environ.get("postgres_user"),
+        'HOST': os.environ.get("postgres_host"), 
+        'PORT': os.environ.get("postgres_port"),
     }
 }
 
